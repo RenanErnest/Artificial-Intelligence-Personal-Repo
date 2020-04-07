@@ -18,8 +18,11 @@ class k_means:
         for caseValues in self.data:
             summ += self.distance(caseValues,self.Ks[0])**2
         probs = [self.distance(x,self.Ks[0])**2/summ for x in self.data]
+        indexes = np.arange(len(self.data))
+        
         for i in range(1,self.Ks.shape[0]):
-            j = np.random.choice(range(len(self.data)), p=probs)
+
+            j = np.random.choice(indexes, p=probs)
             self.Ks[i] = self.data[j]
         print(self.Ks)
         self.U = np.zeros((K,self.data.shape[0]))

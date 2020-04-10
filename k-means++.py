@@ -19,11 +19,11 @@ class k_means:
             summ += self.distance(caseValues,self.Ks[0])**2
         probs = [self.distance(x,self.Ks[0])**2/summ for x in self.data]
         indexes = np.arange(len(self.data))
-        
-        for i in range(1,self.Ks.shape[0]):
 
-            j = np.random.choice(indexes, p=probs)
-            self.Ks[i] = self.data[j]
+        print(probs,indexes)
+        j = np.random.choice(indexes,p=probs,size=self.Ks.shape[0]-1,replace=False)
+        for i in range(1,self.Ks.shape[0]-1):
+            self.Ks[i] = self.data[j[i]]
         print(self.Ks)
         self.U = np.zeros((K,self.data.shape[0]))
 
@@ -98,14 +98,16 @@ class k_means:
             print('Group: ',minimum_index)
 
 
+data = pd.read_csv('MLP_Data/problemAND.csv', header=None)
+data = data.drop(data.columns[-1], axis=1)
+km = k_means(4,data)
+km.train(1)
+km.predict(data)
+
 data = pd.read_csv('MLP_Data/caracteres-limpo.csv', header=None)
 data = data.drop(data.columns[-1], axis=1)
 km = k_means(7,data)
 km.train(1)
 km.predict(data)
 
-# data = pd.read_csv('MLP_Data/problemAND.csv', header=None)
-# data = data.drop(data.columns[-1], axis=1)
-# km = k_means(4,data)
-# km.train(1)
-# km.predict(data)
+
